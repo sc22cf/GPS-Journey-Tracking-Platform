@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block nav_list %}
+<li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+<li class="nav-item"><a href="/change_membership" class="nav-link">Membership</a></li>
+<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+{% endblock %}
+
+
+{% block content %}
+<section class="mt-lg-3 p-3">
+    
+    <div class="container d-flex flex-lg-row flex-column-reverse py-4 mt-lg-5">
+        <div id = "tabs-id" class="container col-4">
+            <ul class="nav nav-tabs " id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active fa-solid fa-location-dot fa-2xl" title="Your Routes" id="your-routes-tab" data-bs-toggle="tab" data-bs-target="#your-routes" type="button" role="tab" aria-controls="your-routes" aria-selected="true"></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fa-solid fa-map-location-dot fa-2xl" title="Friend's Routes" id="explore-friends-tab" data-bs-toggle="tab" data-bs-target="#explore-friends" type="button" role="tab" aria-controls="explore-friends" aria-selected="false"></button>
+                  </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link fa-solid fa-user-group fa-2xl" title="Friends" id="friends-routes-tab" data-bs-toggle="tab" data-bs-target="#friends-routes" type="button" role="tab" aria-controls="friends-routes" aria-selected="false"></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link fa-solid fa-user-plus fa-2xl" title="Add Friends" id="add-friends-tab" data-bs-toggle="tab" data-bs-target="#add-friends" type="button" role="tab" aria-controls="add-friends" aria-selected="false"></button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="your-routes" role="tabpanel" aria-labelledby="your-routes-tab">
+                    <div class="container d-flex flex-sm-row flex-column justify-content-center align-items-center mt-3 ">
+                        <form action="">
+                            <div class="form-outline mb-2" data-mdb-input-init>
+                                <label class="mx-1 mb-1" for="datatable-search-input">Search by name:</label>
+                                <input type="text" class="form-control" id="datatable-search-input" onkeyup="liveRouteSearch(this.value)" style="width: 225px;" placeholder="Search routes">
+                            </div>                            
+                        </form>
+                        <form action="">
+                            <div class="form-outline mb-2 px-3">
+                                <label for="date" class="mx-1 mb-1">Search by date:</label>
+                                <input type="date" class="form-control" onchange="liveDateSearch()"id="date">
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <p class="text-center mx-2"> <b>Drag and drop (max 5)</b> </p>
+                        <button class="icon-button unfollow" id="clear-map" onclick="clearMap()"><i class="fa-solid fa-square-minus fa-xl mb-4" title="Clear Map"></i></button>
+                    </div>
+                    <p class="text-center" id="file-format-error" style="font-size:0.9em; color:red;">File not correctly formatted</p>
+                    
+                    <div class="container">
+                        <div id="route-results" class="p-2 text-center mt-0 py-0"></div>
+                        <div class="accordion" id="routeAccordion"> 
+                            {% for route in routes %}
+                            <div class="accordion-item route-accordion-item display" id="accordion-{{route.id}}"
+                                {% if loop.index > 5 %}style="display:none;"{% endif %}>
+                                <button id="{{route.id}}" draggable="true" ondragstart="drag(event)" onclick="zoomRoute('{{ route.id }}')" class="accordion-button collapsed" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ route.id }}"
+                                    aria-expanded="false" aria-controls="collapse{{ route.id }}">
+                                    <span class="span_class" style="width:100%; color:black;">{{ route.file_name }}</span>
+                                </button>
+                                <div id="collapse{{ route.id }}" class="accordion-collapse collapse" data-bs-parent="#routeAccordion">
+                                    <div class="accordion-body text-center">
+                                        <div>
+                                            <p><span class="fa fa-road" title="Route Distance"></span> {{ route.distance }} km</p>
+                                            <p><span class="fa-regular fa-clock" title="Time Taken"></span> {{ route.time }}</p>
+                                            <p><span class="fa-solid fa-person-running" title="Average Speed"></span> {{route.speed}} km/h</p>
+                                        </div>                                        
+                                        <div id = "download-{{route.id}}" class="btn btn-primary fa-solid fa-download" title="Download Route" onclick="downloadRoute('{{route.id}}')"></div>
+                                        <div id = "{{route.id}}" class="btn btn-danger fa fa-trash-o" title="Delete Route" onclick="deleteRoute('{{route.id}}')"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% if not routes %} 
+                                <p id="no-routes-message" class="text-center">You have no saved routes</p>
+                            {% else %} 
+                                <p id="no-routes-message" class="text-center" style="display:none;">You have no saved routes</p>
+                            {% endif %}
+        
+                        </div>
+                        <div class="container p-4 text-center d-flex flex-column">
+                            <label for="gpxFileInput" class="mx-1 mb-1">Upload Route:</label>
+                            <button class="btn btn-primary mb-2 mx-auto" style="width:140px;" onclick="document.getElementById('gpxFileInput').click()">Create New +</button>
+                            <input type="file" id="gpxFileInput" accept=".gpx" style="display:none;">
+                            <p style="font-size:0.8em;"><b>(Only .gpx files with timestamps)</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="explore-friends" role="tabpanel" aria-labelledby="explore-friends-tab">
+                    <div class="container d-flex mt-4 justify-content-between">
+                        <div id = "back" class="col-2">
+                            <div id = "back-explore" class="fa-solid fa-circle-left fa-xl my-2" style="display:none;" onclick="displayRecentRoutes()"></div>
+                        </div>
+                        <p class="text-center col-6"> <b>Drag and drop (max 5)</b> </p>
+                        <div class=" col-2"></div>
+                    </div>
+                    <div class="container">
+                        <div class="accordion mt-1" id="friendAccordion"> 
+                            {% for route in recent_friend_routes %}
+                            <div class="accordion-item friend-accordion-item  display" id="friend-accordion-{{route.route.id}}"
+                                {% if loop.index > 5 %}style="display:none;"{% endif %}>
+                                <button id="friends-{{route.route.id}}" draggable="true" ondragstart="drag(event)" onclick="zoomRoute('{{ route.route.id }}')" class="accordion-button collapsed" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ route.route.id }}"
+                                    aria-expanded="false" aria-controls="collapse{{ route.route.id }}">
+                                    <span class="span_class" style="width:100%; color:black;">{{ route.route.file_name }}, {{ route.username }}</span>
+                                    
+                                </button>
+        
+                                <div id="collapse{{ route.route.id }}" class="accordion-collapse collapse" data-bs-parent="#friendAccordion">
+                                    <div class="accordion-body text-center">
+                                        <div>
+                                            <p><span class="fa fa-road" title="Route Distance"></span>  {{ route.route.distance }} km</p>
+                                            <p><span class="fa-regular fa-clock" title="Time Taken"></span>  {{ route.route.time }}</p>
+                                            <p><span class="fa-solid fa-person-running" title="Average Speed"></span>  {{route.route.speed}} km/h</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% if not recent_friend_routes %} 
+                                <p id="no-friends-routes-message" class="text-center">Friends routes do not exist </p>
+                            {% else %} 
+                                <p id="no-friends-routes-message" class="text-center" style="display:none;">Friends routes do not exist </p>
+                            {% endif %}
+        
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="friends-routes" role="tabpanel" aria-labelledby="friends-routes-tab">
+                        <div class="mt-3">
+                        <form action="">
+                            <div class="form-outline my-3 d-flex justify-content-center align-items-center mx-auto flex-column" data-mdb-input-init>
+                                <label class="mx-1 mb-1" style="padding-right:130px" for="datatable-search-input-2">Search friends:</label>
+                                <input type="text"  class="form-control" id="datatable-search-input-2" style="width: 250px;" onkeyup="liveFriendSearch(this.value)" placeholder="Search...">
+                            </div>
+                        </form>
+                    </div>
+                    <p class="text-center" style="font-weight:bold;">Following</p>
+                    <div id="results1">
+                        {% for friend in friends_usernames %}
+                        <div class="friend-item display" id="friend-item-{{ friend.id }}" {% if loop.index > 5 %}style="display:none;"{% endif %}>
+                            <div class="p-3 mb-3 d-flex border rounded shadow-sm justify-content-between" id="friend-{{ friend.id }}">
+                                {{ friend.username }} 
+                                <div class="d-flex justify-content-end">
+                                    <button class="icon-button friend-route mx-1" id="friend-button-{{ friend.id }}" onclick="displayFriendRoutes('{{ friend.id }}',false)"><i class="fa-solid fa-map-location-dot fa-xl" title="View Friend's Routes"></i></button>
+                                    <button class="icon-button unfollow" id="friend-button-{{ friend.id }}" onclick="togglefollowUser('{{ friend.id }}')"><i class="fa-regular fa-circle-xmark fa-xl" title="Remove Friend"></i></button>
+                                </div>
+                                
+                            </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <div id="result1-error"></div>
+                </div>
+                <div class="tab-pane fade" id="add-friends" role="tabpanel" aria-labelledby="add-friends-tab">
+                    <div class="mt-3">
+                        <form action="">
+                            <div class="form-outline my-3 d-flex justify-content-center align-items-center flex-column mx-auto" data-mdb-input-init>
+                                <label class="mx-1 mb-1" style="padding-right:140px" for="datatable-search-input-3">Search users:</label>
+                                <input type="text"  class="form-control" id="datatable-search-input-3" onkeyup="liveUserSearch(this.value)" style="width: 250px;" placeholder="Search...">
+                            </div>
+                        </form>
+                        <div id="results">
+                            <p class="text-center" style="font-weight:bold;">Top Followed</p>
+                            {% for user in most_followed %}
+                            <div class="user-items" id="user-item-{{ user.user.id }}" {% if loop.index > 5 %}style="display:none;"{% endif %}>
+                                {% if user.followed == True %}
+                                <div class="p-3 mb-3 d-flex border rounded shadow-sm justify-content-between">
+                                    <span>{{ user.user.username }}, <span id="user-followers-{{ user.user.id }}">{{ user.followers }}</span> follower(s)</span>
+                                    <button class="icon-button followed" id="icon-button-{{ user.user.id }}" onclick="togglefollowUser('{{ user.user.id }}')"><i class="fa-solid fa-circle-check fa-xl" title="Remove Friend"></i></button>
+                                </div>
+                                {% else %}
+                                <div class="p-3 mb-3 d-flex border rounded shadow-sm justify-content-between">
+                                    <span>{{ user.user.username }}, <span id="user-followers-{{ user.user.id }}">{{ user.followers }}</span> follower(s)</span>
+                                    <button class="icon-button follow" id="icon-button-{{ user.user.id }}" onclick="togglefollowUser('{{ user.user.id }}')"><i class="fa-solid fa-circle-plus fa-xl" title="Add Friend"></i></button>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div id="result-error"></div>
+                        
+                    </div>
+                </div>
+              </div>
+            </div>
+        <div class="container p-lg-4 w-100 mt-4" >
+            <div class="mx-4shadow shadow-lg" style="height: 500px;" >
+                <div id="map" ondrop="drop(event)" ondragover="allowDrop(event)" class="rounded" style="height: 500px;"></div>
+            </div>
+        </div>
+        <div class="col d-flex"><div id="sidebar"></div></div>
+    </div>
+    
+        
+</section>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src='togeojson.js'></script>
+<script src="../static/home.js"></script>
+{% endblock %}

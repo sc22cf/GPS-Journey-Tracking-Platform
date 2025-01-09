@@ -1,0 +1,219 @@
+
+nav{
+  background-color: #164863;
+}
+
+footer{
+  background-color: #2D566C;
+}
+
+#myProfileImg {
+    display: block;
+    max-width: 35%;
+    height: auto;
+  }
+#homeProfileImg {
+    display: block;
+    max-width: 25%;
+    height: auto;
+  }
+
+#friends {
+  display: block;
+  max-width: 60%;
+  height: auto;
+}
+
+.user-found:hover{
+  font-size: 1.7rem;
+}
+
+
+.username-tag:hover{
+  font-size: 1.1rem;
+}
+
+.input-control input{
+  border-width: 2px;
+}
+
+.input-control.success input{
+  border-color: green;
+}
+.input-control.success select{
+  border-color: green;
+}
+
+.input-control.error input{
+  border-color: red;
+}
+
+.error {
+  border-color: red;
+}
+.success {
+  border-color: green;
+}
+
+.input-control.error .form-text{
+  color:red;
+}
+
+
+/* .route-item {
+  list-style: none;
+  padding: 1.1rem;
+  background-color: lightslategray;
+  margin-bottom: 10px;
+  text-align: center;
+  width: ;
+} */
+
+.accordion-header {
+  width: 100%;
+}
+
+.accordion-button {
+  width: 100%;
+  /* Additional styling to ensure the button fills the header */
+}
+
+.nav-link {
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.icon-button.follow{
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6188ba;
+}
+
+.icon-button.follow:hover{
+  color: #1b57a5;
+}
+.icon-button.followed{
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3cb42f;
+}
+
+.icon-button.followed:hover{
+  color: #12b101;
+  
+}
+
+.icon-button.unfollow{
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ae1919a2;
+}
+
+.icon-button.unfollow:hover{
+  color: #d10000;
+  
+}
+
+.icon-button.friend-route{
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #11c3eb;
+}
+
+.icon-button.friend-route:hover{
+  color: #0a8eab;
+  
+}
+
+#file-format-error {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+
+#clear-map{
+  color: #11c3eb;
+  cursor: pointer;
+}
+
+#clear-map:hover{
+  color: #0a8eab;
+}
+
+
+#back-explore{
+  color: orange;
+  cursor: pointer;
+}
+
+#back-explore:hover{
+  color: rgb(190, 125, 4);
+}
+
+#myCanvas {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+input[type="text"].readonly {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+select:disabled {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+#tabs1{
+  margin:20px;
+}
+
+#welcome-txt h1{
+  font-size: 4.8rem;
+}
+
+@media (max-width: 990px){
+  #tabs-id{
+    width: 100%;
+    margin-top: 20px;
+  }
+  #welcome-img{
+    display: none;
+  }
+  #welcome-txt h1{
+    font-size: 3.6rem;
+  }
+  #track-adventure-txt {
+    text-align: center;
+  }
+ 
+
+}
+
+@media (max-width: 768px){
+  #myCanvas{
+    width: 500px;
+  }
+}
+
+@media (max-width: 570px){
+  #map-img{
+    width: 100%;
+  }
+  
+}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block nav_list %}
+<li class="nav-item"><a href="#" class="nav-link active">Payment</a></li>
+<li class="nav-item"><a href="/logout" class="nav-link">Log out</a></li>
+{% endblock %}
+
+
+{% block content %}
+<head>
+  <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+  <link rel="stylesheet" type="text/css" href="../static/payment.css">
+</head>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <ul>
+  {% for message in messages %}
+      <li>{{ message }} </li>
+  {% endfor %}
+  </ul>
+{% endif %}
+{% endwith %}
+
+<h1>Payment Plans</h1>
+
+<body>
+  <section class="mt-5 p-3 text-center">
+    <div class=" mt-5 row d-flex justify-content-center align-items-center">
+      <div class="col-sm-6 col-md-8 col-lg-6 col-xl-4 p-4 shadow rounded">
+          <!-- {% with messages = get_flashed_messages(with_categories=True) %}  
+              {% if messages %}  
+                  {% for category, message in messages %} 
+                      {% if category == "error" %} 
+                          <div class="alert alert-danger alter-dismissible fade show" role="alert">
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              <p>{{ message }}</p>
+                          </div>
+                      {% endif %}
+                  {% endfor %}  
+              {% endif %}  
+          {% endwith %}   -->
+          <h3 class="p-4 mb-4">Enter your payment details</h3>
+          <form action="" method="post" id="payment-form" novalidate>
+              <div class="container d-flex flex-md-row flex-column justify-content-center">
+                <button type="button" class="btn btn-light disabled"> Account details</button>
+              <button type="submit" class="btn btn-secondary active"disabled>Membership Plan</button>
+              <button type="submit" class="btn btn-light">Confirmation</button>
+              </div>
+              {{ form.hidden_tag() }}
+              <div class="mt-4 mb-3 input-control d-flex">
+                {% for subfield in form.plan %}
+                <div class="container border border-secondary rounded p-2 m-1" style=" background-color: rgb(228, 228, 228)">
+                      {{ subfield }}
+                      {{ subfield.label(class='choice-' + subfield.data.lower()) }}
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="mb-3 input-control text-start">
+                <label for="street-address" class="px-1" >Street Address</label>
+                {{ form.street_address(id="street-address",class="form-control",placeholder="Enter street address ")}}
+                <div class="error form-text"></div>
+              </div>
+              <div class="mb-3 input-control text-start">
+                <label for="city" class="px-1" >City</label>
+                {{ form.city(id="city",class="form-control",placeholder="Enter city ")}}
+                <div class="error form-text"></div>
+              </div>
+              <div class="mb-3 input-control text-start">
+                <label for="country" class="px-1" >Country</label>
+                {{ form.country(id="country",class="form-control")}}
+                <div class="error form-text"></div>
+              </div>
+              <div class="mb-3 input-control text-start">
+                <label for="postcode" class="px-1" >Postcode</label>
+                {{ form.postcode(id="postcode",class="form-control",placeholder="Enter postcode")}}
+                <div class="error form-text"></div>
+              </div>
+              <div class="mb-3 input-control text-start">
+                <label for="card-element" class="px-1">Card Details</label>
+                <div id="card-element" class="input control form-control" style="padding:10px;">
+                </div>
+              </div>
+              
+          </form>
+      </div>
+  </div>
+  </div>
+  <br>
+  <br><br>
+</section>
+</body>
+<script src="../static/payment.js"></script>
+{% endblock %}

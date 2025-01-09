@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% block nav_list %}
+<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+{% endblock %}
+{% block content %}
+<br><br><br><br><br><br>
+<section class="p-5 my-5 text-center ">
+    <div class="row d-flex justify-content-center p-4">
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 p-4 shadow rounded">
+            {% with messages = get_flashed_messages(with_categories=True) %}  
+                {% if messages %}  
+                    {% for category, message in messages %} 
+                        {% if category == "error" %} 
+                            <div class="alert alert-danger alter-dismissible fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}  
+                {% endif %}  
+            {% endwith %}
+            <h2 class="p-4">Log In</h2>
+            <form action="" method="POST" id="login-form" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="mb-4 input-control">
+                    <label for="login-email-or-username" class="form-label">Email Address or Username:</label>
+                    {{ form.email_or_username(id="login-email-or-username",class="form-control") }}
+                    <div class="error form-text"></div>
+                </div>
+                <div class="mb-4 input-control">
+                    <label for="login-password" class="form-label">Password:</label>
+                    {{ form.password(id="login-password",class="form-control") }}
+                    <div class="error form-text"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" name="login">Log in</button>
+            </form>
+        </div>
+    </div>
+</section>
+<br><br><br>
+<script src="../static/login.js"></script>
+{% endblock %} 

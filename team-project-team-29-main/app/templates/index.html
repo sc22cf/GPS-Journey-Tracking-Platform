@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block nav_list %}
+<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+<li class="nav-item"><a href="/login" class="nav-link">Log in</a></li>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="my-5 px-2 py-4">
+    <br><br>
+    <div class="container d-flex justify-content-between">
+        <div class="container mt-4 ">
+            <div id="welcome-txt" class="container">
+                <h1 class="py-3" style="font-weight:700;"> Welcome to Trackr!</h1>
+                <h4>Discover, Track and Conquer trails around you</h4>
+            </div>
+            <div class="container mt-3 p-3">
+                <a href="/register"><button type="button" class="btn btn-lg btn-primary">Join Trackr Now</button></a>
+            </div>
+        </div>
+        <img id ="welcome-img" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlJTIwaGlraW5nfGVufDB8fDB8fHww" alt="" class="rounded shadow-lg  bg-body" width ="1000px">
+    </div>
+    <br><br>
+</section>
+<section class="py-5" style="background-color: #F7F7F7;">
+    <div class="container p-3" >
+        <h1 class="mb-4" style="font-weight:600">Explore Trails Near you</h1>
+    </div>
+    <div class="container d-flex flex-lg-row flex-column justify-content-between" >
+        <div class="container text-center ">
+            <img src="https://images.unsplash.com/photo-1615387362883-bc09da7b4c0c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y3ljbGlzdHxlbnwwfHwwfHx8MA%3D%3D" alt="" height="500px" width="320px" class="shadow-lg  bg-body rounded">
+            <h3 class="p-3" style="color:#616161">Cycling</h3>
+        </div>
+        <div class="container text-center">
+            <img src="https://images.unsplash.com/photo-1602333158618-dd71de539d3b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGhpa2VyfGVufDB8fDB8fHww" alt="" height="500px" width="320px" class="shadow-lg  bg-body rounded">
+            <h3 class="p-3" style="color:#616161">Hiking</h3>
+        </div>
+        <div class="container text-center">
+            <img src="https://images.unsplash.com/photo-1590545495809-90d4c3a8d571?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTJ8fHJ1bm5pbmd8ZW58MHwxfDB8fHww" alt="" height="500px" width="320px" class="shadow-lg  bg-body rounded">
+            <h3 class="p-3" style="color:#616161">Running</h3>
+        </div>
+    </div>
+    <div class="container p-3 " >
+        <h4 style="font-weight:600"> No matter your interests, we've got you covered! From serene nature walks to exhilarating mountain bike trails, Trackr offers a variety of options to suit every adventurer.</h4>
+    </div>
+    <br>
+</section>
+<section class="p-5" style="
+    background-image:url('https://images.ctfassets.net/9olkiac82a1q/z1I4vb7OvrjvKk5jIJ5Z4/8f5ae13ca6feb5274cce65f608624b3f/JoinStrava-Mod8-FindInspiration-Desktop.jpg?q=50');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-color: black;" >
+    <br><br>
+        <div class="container p-3" >
+            <h1 class="mb-4 text-light" style="font-weight:600">Share Your Experiences</h1>
+            <h4 class="text-light">Connect and share trails with friends effortlessly.<br>Start exploring together today!</h4>
+        </div>
+        <img src="" alt="">
+        <br><br><br>
+</section>
+
+<section class="p-3" style="background-color: #F7F7F7;">
+
+    <br><br><br>
+    <div id="track-adventure-txt" class="container d-flex flex-lg-row flex-column " >
+        <div  class="container p-2" >
+            <h1 class="mb-4" style="font-weight:600">Track Your Adventures</h1>
+            <h4>Record your hikes, runs or bike rides with GPS tracking. <br> Keep tabs on distance, elevation, pace, and more to <br> monitor your progress</h4>
+        </div>
+        <div class="container px-md-5 mt-md-0 mt-4" >
+            <img id="map-img"src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2022/07/route-marked-on-a-map.jpg" alt="" width="500px" class="rounded shadow-lg  bg-body">
+        </div>
+        
+    </div>
+    <br><br><br>
+</section>
+
+{% endblock %}
