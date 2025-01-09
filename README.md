@@ -24,7 +24,7 @@ To start using **Trackr**, please visit our website: **[Trackr Official Website]
 
 Follow these simple steps to get started:
 * **Create an Account:** Register on our site using the 'Register' link on the landing page. You will need to set up your membership plan during the registration process.
-* **Upload Your Routes:** After logging in, navigate to 'Create New Route' to upload your .GPX files and view them on our map interface.
+* **Upload Your Routes:** After logging in, navigate to 'Create New Route' to upload your .GPX files and view them on our map interface. (Please use the GPX files provided in test_files)
 * **Explore:** Utilize the features like viewing routes, managing followers, and adjusting your membership plan as described in our website traversal diagram.
 
 ## Website Traversal Diagram:
