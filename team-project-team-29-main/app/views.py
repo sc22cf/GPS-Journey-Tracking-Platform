@@ -9,7 +9,7 @@ import uuid
 import os
 import stripe
 from datetime import datetime, timedelta,timezone
-# stripe.api_key = "INSERT STRIPE API KEY FOR DEMO"
+stripe.api_key = 'sk_test_51OlvRTGtS0Bq4hChRjwYIu1IdERtC7aDWEerIhqInMwDnLSR3oM675t29XfMIhCOmUhnEHgQYo9OdjieqZvbXhzs00lfFDwFIw'
 import json
 from sqlalchemy import desc
 from collections import Counter
